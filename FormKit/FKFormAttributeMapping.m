@@ -17,48 +17,45 @@
 
 #import "FKFormAttributeMapping.h"
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 @implementation FKFormAttributeMapping
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)init {
-    self = [super init];
-    if (self) {
-        self.keyboardType = UIKeyboardTypeNumberPad;
-        self.hideLabel = NO;
-        self.textAlignment = NSTextAlignmentLeft;
-        self.valueTextAlignment = NSTextAlignmentRight;
-        self.clearsOnBeginEditing = NO;
-        self.autocorrectionType = UITextAutocorrectionTypeDefault;
-        self.separatorMargin = CGFLOAT_MAX;
-    }
-    return self;
+  self = [super init];
+  if (self) {
+    self.keyboardType = UIKeyboardTypeNumberPad;
+    self.hideLabel = NO;
+    self.textAlignment = NSTextAlignmentLeft;
+    self.valueTextAlignment = NSTextAlignmentRight;
+    self.clearsOnBeginEditing = NO;
+    self.autocorrectionType = UITextAutocorrectionTypeDefault;
+    self.separatorMargin = CGFLOAT_MAX;
+    self.labelTextWidth = CGFLOAT_MAX;
+    self.requiredField = NO;
+  }
+  return self;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 + (id)attributeMapping {
-    return [[self alloc] init];
+  return [[self alloc] init];
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setType:(FKFormAttributeMappingType)type {
-    _type = type;
-    
-    if (FKFormAttributeMappingTypeFloat == type) {
-        self.keyboardType = UIKeyboardTypeDecimalPad;
-    } else if (FKFormAttributeMappingTypeInteger == type) {
-        self.keyboardType = UIKeyboardTypeNumberPad;
-        
-    } else {
-        self.keyboardType = UIKeyboardTypeDefault;
-    }
-}
+  _type = type;
 
+  if (FKFormAttributeMappingTypeFloat == type) {
+    self.keyboardType = UIKeyboardTypeDecimalPad;
+  } else if (FKFormAttributeMappingTypeInteger == type) {
+    self.keyboardType = UIKeyboardTypeNumberPad;
+
+  } else {
+    self.keyboardType = UIKeyboardTypeDefault;
+  }
+}
 
 @end

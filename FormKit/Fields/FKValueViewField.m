@@ -31,8 +31,14 @@
     [super layoutSubviews];
     
     if (self.textLabel.hidden) {
-        self.valueView.frame = CGRectInset(self.bounds, self.xMargin, 0);
         
+        if (nil != self.errorLabel.text) {
+            CGRect rect = CGRectInset(self.bounds, self.xMargin, 0);
+            rect.size.height -= self.errorLabel.frame.size.height;
+            self.valueView.frame = rect;
+        } else {
+            self.valueView.frame = CGRectInset(self.bounds, self.xMargin, 0);
+        }
     } else {
         self.valueView.frame = CGRectMake(self.textLabel.frame.origin.x + self.textLabel.frame.size.width + 20, self.textLabel.frame.origin.y,
                                           self.contentView.frame.size.width - self.textLabel.frame.size.width - 40, self.textLabel.frame.size.height);

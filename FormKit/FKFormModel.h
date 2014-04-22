@@ -25,44 +25,52 @@
 
 @interface FKFormModel : NSObject <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic, retain) id object;
-@property (nonatomic, retain) UINavigationController *navigationController;
-@property (nonatomic, assign) Class selectControllerClass;
-@property (nonatomic, assign) Class longTextControllerClass;
-@property (nonatomic, copy, readonly) FKFormMappingDidChangeValueBlock didChangeValueBlock;
-@property (nonatomic, copy, readonly) FKFormMappingConfigureCellBlock configureCellsBlock;
-@property (nonatomic, retain) UIView *viewOrigin;
-@property (nonatomic, strong) UIColor *labelTextColor;
-@property (nonatomic, strong) UIColor *valueTextColor;
-@property (nonatomic, assign) Class topHeaderViewClass;
-@property (nonatomic, assign) Class bottomHeaderViewClass;
+@property(nonatomic, weak) UITableView *tableView;
+@property(nonatomic, retain) id object;
+@property(nonatomic, retain) UINavigationController *navigationController;
+@property(nonatomic, assign) Class selectControllerClass;
+@property(nonatomic, assign) Class longTextControllerClass;
+@property(nonatomic, copy, readonly)
+    FKFormMappingDidChangeValueBlock didChangeValueBlock;
+@property(nonatomic, copy, readonly)
+    FKFormMappingConfigureCellBlock configureCellsBlock;
+@property(nonatomic, retain) UIView *viewOrigin;
+@property(nonatomic, strong) UIColor *labelTextColor;
+@property(nonatomic, strong) UIColor *valueTextColor;
+@property(nonatomic, assign) Class topHeaderViewClass;
+@property(nonatomic, assign) Class bottomHeaderViewClass;
 
 /**
  A set of attribute names with invalid values.
- 
+
  Make sure you use the same strings that you used when mapping  attributes.
- 
+
  You should call reloadData on your table view after setting this value.
  */
-@property (nonatomic,strong) NSSet *invalidAttributes;
+@property(nonatomic, strong) NSSet *invalidAttributes;
 
 /**
- Color used for the title label in table cells for attribues with invalid values.
- 
+ Color used for the title label in table cells for attribues with invalid
+ values.
+
  The default is red.
  */
-@property (nonatomic,strong) UIColor *validationErrorColor;
+@property(nonatomic, strong) UIColor *validationErrorColor;
 
 /**
  Cell background color in table cells for attribues with values.
  */
-@property (nonatomic, strong) UIColor *validationNormalCellBackgroundColor;
+@property(nonatomic, strong) UIColor *validationRequiredCellBackgroundColor;
+
+/**
+ Cell background color in table cells for attribues with values.
+ */
+@property(nonatomic, strong) UIColor *validationNormalCellBackgroundColor;
 
 /**
  Cell background color in table cells for attribues with invalid values.
  */
-@property (nonatomic, strong) UIColor *validationErrorCellBackgroundColor;
+@property(nonatomic, strong) UIColor *validationErrorCellBackgroundColor;
 
 + (id)formTableModelForTableView:(UITableView *)tableView;
 
@@ -70,7 +78,7 @@
             navigationController:(UINavigationController *)navigationController;
 
 - (id)initWithTableView:(UITableView *)tableView
-   navigationController:(UINavigationController *)navigationController;
+    navigationController:(UINavigationController *)navigationController;
 
 - (void)registerMapping:(FKFormMapping *)formMapping;
 
@@ -78,11 +86,13 @@
 
 - (void)reloadRowWithIdentifier:(NSString *)identifier;
 
-- (void)reloadRowWithAttributeMapping:(FKFormAttributeMapping *)attributeMapping;
+- (void)reloadRowWithAttributeMapping:
+        (FKFormAttributeMapping *)attributeMapping;
 
 - (void)reloadSectionWithIdentifier:(NSString *)sectionIdentifier;
 
-- (void)setDidChangeValueWithBlock:(FKFormMappingDidChangeValueBlock)didChangeValueBlock;
+- (void)setDidChangeValueWithBlock:
+        (FKFormMappingDidChangeValueBlock)didChangeValueBlock;
 
 - (void)configureCells:(FKFormMappingConfigureCellBlock)configureCellsBlock;
 
@@ -110,3 +120,6 @@
 - (void)validateFieldWithIdentifier:(NSString *)identifier;
 
 @end
+
+extern NSString *const FKPickerDidShowNotification;
+extern NSString *const FKPickerDidHideNotification;

@@ -17,7 +17,6 @@
 
 #import "FKTextField.h"
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -25,67 +24,58 @@
 
 @synthesize textField = _textField;
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        self.customTextFieldClass = [UITextField class];
-    }
-    return self;
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *)reuseIdentifier {
+  self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+  if (self) {
+    self.customTextFieldClass = [UITextField class];
+  }
+  return self;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setCustomTextFieldClass:(Class)customTextFieldClass {
-    if (_customTextFieldClass != customTextFieldClass) {
-        _customTextFieldClass = customTextFieldClass;
-        
-        _textField = [[self.customTextFieldClass alloc] init];
-        
-        self.textField.textAlignment = NSTextAlignmentRight;
-        
-        [self.textField addTarget:self
-                           action:@selector(textFieldDidChangeValue)
-                 forControlEvents:UIControlEventAllEditingEvents];
-        
-        self.valueView = self.textField;
-    }
-}
+  if (_customTextFieldClass != customTextFieldClass) {
+    _customTextFieldClass = customTextFieldClass;
 
+    _textField = [[self.customTextFieldClass alloc] init];
+
+    self.textField.textAlignment = NSTextAlignmentRight;
+
+    [self.textField addTarget:self
+                       action:@selector(textFieldDidChangeValue)
+             forControlEvents:UIControlEventAllEditingEvents];
+    self.valueView = self.textField;
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)prepareForReuse {
-    [super prepareForReuse];
-    
-    self.textField.placeholder = nil;
-    self.textField.text = nil;
-    self.textField.delegate = nil;
-}
+  [super prepareForReuse];
 
+  self.textField.placeholder = nil;
+  self.textField.text = nil;
+  self.textField.delegate = nil;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)textFieldDidChangeValue {
-    
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 #pragma mark FKFieldStyleProtocol
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setValueTextAlignment:(NSTextAlignment)valueTextAligment {
-    self.textField.textAlignment = valueTextAligment;
+  self.textField.textAlignment = valueTextAligment;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setValueTextColor:(UIColor *)color {
-    self.textField.textColor = color;
+  self.textField.textColor = color;
 }
-
 
 @end

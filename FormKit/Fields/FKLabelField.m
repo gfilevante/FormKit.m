@@ -17,33 +17,46 @@
 
 #import "FKLabelField.h"
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 @implementation FKLabelField
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-    }
-    return self;
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *)reuseIdentifier {
+  self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+  if (self) {
+    self.labelWidth = CGFLOAT_MAX;
+    self.detailTextLabel.backgroundColor = [UIColor clearColor];
+  }
+  return self;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)prepareForReuse {
-    [super prepareForReuse];
-    
-    self.detailTextLabel.text = nil;
+  [super prepareForReuse];
+
+  self.detailTextLabel.text = nil;
 }
 
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  if (self.labelWidth != CGFLOAT_MAX) {
+    CGRect frame = self.detailTextLabel.frame;
+    frame.origin.x = (frame.origin.x + frame.size.width) - self.labelWidth;
+    frame.size.width = self.labelWidth;
+    self.detailTextLabel.frame = frame;
+  }
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 + (UITableViewCellStyle)cellStyle {
-    return UITableViewCellStyleValue1;
+  return UITableViewCellStyleValue1;
 }
 
+- (void)hideLabel {
+  self.textLabel.hidden = YES;
+}
 
 @end

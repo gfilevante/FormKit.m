@@ -72,7 +72,7 @@
                                                  lineBreakMode:self.errorLabel.lineBreakMode];
         
         self.errorLabel.frame = CGRectMake(self.textLabel.frame.origin.x,
-                                           self.textLabel.frame.origin.y + self.textLabel.frame.size.height + 10,
+                                           self.textLabel.frame.origin.y + self.textLabel.frame.size.height + 15,
                                            errorLabelWidth,
                                            stringSize.height);
     }
@@ -113,7 +113,7 @@
                           constrainedToSize:CGSizeMake(contentViewWidth, 5000)
                               lineBreakMode:errorLabelLineBreakMode];
     
-    return stringSize.height + 5;
+    return stringSize.height + 10;
 }
 
 
@@ -126,6 +126,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setErrorBackgroundColor:(UIColor *)color {
     self.backgroundColor = color;
+    self.contentView.backgroundColor = color;
 }
 
 

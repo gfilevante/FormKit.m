@@ -21,4 +21,6 @@
 
 @interface FKLabelField : FKSimpleField <FKFieldStyleProtocol>
 
+@property(nonatomic, assign) CGFloat labelWidth;
+
 @end
