@@ -17,16 +17,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FKFieldErrorProtocol.h"
-#import "FKFieldStyleProtocol.h"
+#import "FKTextField.h"
 
-@interface FKSimpleField
-    : UITableViewCell <FKFieldErrorProtocol, FKFieldStyleProtocol>
-
-@property(nonatomic, strong) UILabel *errorLabel;
-@property(nonatomic, assign) CGFloat xMargin;
-@property(nonatomic, strong) UIButton *helpButton;
-@property(nonatomic, strong) UIView *helpView;
-@property(nonatomic, strong) UILabel *helpTextLabel;
+@interface FKSelectField : FKTextField {
+}
 
 @end

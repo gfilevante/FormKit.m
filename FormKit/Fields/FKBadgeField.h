@@ -20,5 +20,7 @@
 #import "FKValueViewField.h"
 
 @interface FKBadgeField : FKValueViewField
-
+@property(nonatomic, readonly) UITextField *textField;
+@property(nonatomic, readonly) UILabel *rightLabel;
+@property(nonatomic, assign) Class customTextFieldClass;
 @end

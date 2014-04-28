@@ -130,17 +130,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)configureField:(UITableViewCell *)field
            withMapping:(FKFormAttributeMapping *)attributeMapping {
-  if (attributeMapping.requiredField) {
-        field.backgroundColor =
-            self.formModel.validationRequiredCellBackgroundColor;
-    field.contentView.backgroundColor =
-        self.formModel.validationRequiredCellBackgroundColor;
-  } else {
-        field.backgroundColor =
-     self.formModel.validationNormalCellBackgroundColor;
-    field.contentView.backgroundColor =
-        self.formModel.validationNormalCellBackgroundColor;
-  }
+
+  field.backgroundColor = self.formModel.validationNormalCellBackgroundColor;
+  field.contentView.backgroundColor =
+      self.formModel.validationNormalCellBackgroundColor;
 
   if (attributeMapping.hideLabel &&
       [field respondsToSelector:@selector(hideLabel)]) {
@@ -169,6 +162,42 @@
         attributeMapping.clearsOnBeginEditing;
     textCell.textField.autocorrectionType = attributeMapping.autocorrectionType;
     //      textCell.textField.userInteractionEnabled = NO;
+    if (attributeMapping.requiredField) {
+      textCell.textField.backgroundColor =
+          self.formModel.validationRequiredFieldBackgroundColor;
+      textCell.textField.layer.borderWidth = 1;
+      textCell.textField.layer.borderColor =
+          [UIColor colorWithRed:198.0f / 255.0f
+                          green:198.0f / 255.0f
+                           blue:198.0f / 255.0f
+                          alpha:1.0f].CGColor;
+    }
+  }
+  if ([field isKindOfClass:[FKBadgeField class]]) {
+    FKBadgeField *textCell = (FKBadgeField *)field;
+    textCell.textField.clearsOnBeginEditing =
+        attributeMapping.clearsOnBeginEditing;
+    textCell.textField.autocorrectionType = attributeMapping.autocorrectionType;
+    //      textCell.textField.userInteractionEnabled = NO;
+    if (attributeMapping.requiredField) {
+      textCell.textField.backgroundColor =
+          self.formModel.validationRequiredFieldBackgroundColor;
+      textCell.textField.layer.borderWidth = 1;
+      textCell.textField.layer.borderColor =
+          [UIColor colorWithRed:198.0f / 255.0f
+                          green:198.0f / 255.0f
+                           blue:198.0f / 255.0f
+                          alpha:1.0f].CGColor;
+    }
+  }
+  if ([field isKindOfClass:[FKLabelField class]]) {
+    FKLabelField *textCell = (FKLabelField *)field;
+    if (attributeMapping.requiredField) {
+      textCell.textLabel.backgroundColor =
+          self.formModel.validationRequiredFieldBackgroundColor;
+      textCell.detailTextLabel.backgroundColor =
+          self.formModel.validationRequiredFieldBackgroundColor;
+    }
   }
 
   if ([field conformsToProtocol:@protocol(FKFieldStyleProtocol)] &&
@@ -237,14 +266,17 @@
     if ([field conformsToProtocol:@protocol(FKFieldErrorProtocol)]) {
       UITableViewCell<FKFieldErrorProtocol> *errorField =
           (UITableViewCell<FKFieldErrorProtocol> *)field;
-      [errorField
-          setErrorBackgroundColor:self.formModel
-                                      .validationErrorCellBackgroundColor];
+      //      [errorField
+      //          setErrorBackgroundColor:self.formModel
+      //                                      .validationErrorCellBackgroundColor];
 
       if (nil != attributeValidation.errorMessageBlock) {
         id value = [self valueForAttributeMapping:attributeMapping];
         [errorField
             addError:attributeValidation.errorMessageBlock(value, self.object)];
+
+        [errorField
+            setErrorBorderColor:self.formModel.validationErrorBorderColor];
         [errorField setErrorTextColor:self.formModel.validationErrorColor];
       }
     }
@@ -372,6 +404,15 @@
     [(FKTextField *)field textField].placeholder =
         attributeMapping.placeholderText;
 
+  } else if ([field isKindOfClass:[FKBadgeField class]]) {
+    [(FKBadgeField *)field textField].text = convertedValue;
+    [(FKBadgeField *)field textField].placeholder =
+        attributeMapping.placeholderText;
+    if (attributeMapping.attributeForRight) {
+      [(FKBadgeField *)field rightLabel].text =
+          [self valueOfObjectForKeyPath:attributeMapping.attributeForRight];
+    }
+
   } else if ([field isKindOfClass:[FKSwitchField class]]) {
     UISwitch *switchControl = [(FKSwitchField *)field switchControl];
     switchControl.on = [(NSNumber *)convertedValue boolValue];
@@ -445,7 +486,7 @@
              type == FKFormAttributeMappingTypeTime ||
              type == FKFormAttributeMappingTypeDate ||
              type == FKFormAttributeMappingTypeDateTime) {
-    return _formMapping.labelFieldClass;
+    return _formMapping.selectFieldClass;
 
   } else if (type == FKFormAttributeMappingTypeSelect &&
              !attributeMapping.showInPicker) {
@@ -462,6 +503,9 @@
 
   } else if (type == FKFormAttributeMappingTypeSeparator) {
     return _formMapping.separatorFieldClass;
+
+  } else if (type == FKFormAttributeMappingTypeBadge) {
+    return _formMapping.badgeFieldClass;
 
   } else {
     return _formMapping.labelFieldClass;
@@ -519,6 +563,13 @@
              type == FKFormAttributeMappingTypeTime ||
              type == FKFormAttributeMappingTypeDate ||
              type == FKFormAttributeMappingTypeDateTime) {
+    [(FKTextField *)field textField].userInteractionEnabled = NO;
+    UIImage *imageCombo = [UIImage imageNamed:@"FormKit.bundle/combo"];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:imageCombo];
+    [(FKTextField *)field textField].rightView = imageView;
+    [(FKTextField *)field textField].rightViewMode = UITextFieldViewModeAlways;
+    [(FKTextField *)field textField].background =
+        [UIImage imageNamed:@"FormKit.bundle/Input"];
 
   } else if (type == FKFormAttributeMappingTypeSelect &&
              !attributeMapping.showInPicker) {
@@ -530,6 +581,12 @@
   } else if (type == FKFormAttributeMappingTypeSlider) {
 
   } else if (type == FKFormAttributeMappingTypeSeparator) {
+  } else if (type == FKFormAttributeMappingTypeBadge) {
+    [[(FKBadgeField *)field textField] setDelegate:self];
+    [[(FKBadgeField *)field textField]
+        setFormAttributeMapping:attributeMapping];
+    [[(FKBadgeField *)field textField]
+        setKeyboardType:attributeMapping.keyboardType];
   }
 
   return field;
@@ -709,19 +766,20 @@
                           ? attributeMapping.rowHeight
                           : self.tableView.rowHeight;
 
-  if ([self.formModel.invalidAttributes
-          containsObject:attributeMapping.attribute] &&
-      nil != attributeValidation.errorMessageBlock) {
-
-    Class<FKFieldErrorProtocol> cellClass =
-        [self cellClassWithAttributeMapping:attributeMapping];
-    id value = [self valueForAttributeMapping:attributeMapping];
-
-    rowHeight +=
-        [cellClass errorHeightWithError:attributeValidation.errorMessageBlock(
-                                            value, self.object)
-                              tableView:self.tableView];
-  }
+  //  if ([self.formModel.invalidAttributes
+  //          containsObject:attributeMapping.attribute] &&
+  //      nil != attributeValidation.errorMessageBlock) {
+  //
+  //    Class<FKFieldErrorProtocol> cellClass =
+  //        [self cellClassWithAttributeMapping:attributeMapping];
+  //    id value = [self valueForAttributeMapping:attributeMapping];
+  //
+  //    rowHeight +=
+  //        [cellClass
+  // errorHeightWithError:attributeValidation.errorMessageBlock(
+  //                                            value, self.object)
+  //                              tableView:self.tableView];
+  //  }
 
   return rowHeight;
 }

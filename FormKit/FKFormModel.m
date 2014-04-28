@@ -106,11 +106,19 @@ NSString *const FKPickerDidHideNotification = @"com.formkit.picker.hide";
                         green:250 / 255.0f
                          blue:250 / 255.0f
                         alpha:1];
-    self.validationRequiredCellBackgroundColor =
+
+    self.validationRequiredFieldBackgroundColor =
         [UIColor colorWithRed:250 / 255.0f
                         green:250 / 255.0f
                          blue:250 / 255.0f
                         alpha:1];
+    self.validationRequiredFieldBorderColor =
+        [UIColor colorWithRed:198.0f / 255.0f
+                        green:198.0f / 255.0f
+                         blue:198.0f / 255.0f
+                        alpha:1.0f];
+
+    self.validationErrorBorderColor = [UIColor redColor];
 
     self.labelTextColor = [UIColor blackColor];
     self.valueTextColor = [UIColor lightGrayColor];
@@ -185,6 +193,12 @@ NSString *const FKPickerDidHideNotification = @"com.formkit.picker.hide";
       UITableViewCell *cell = [self cellForRowAtIndexPath:indexPath];
       attributeMapping.cellSelectionBlock(cell, self.object, indexPath);
     }
+  } else if (FKFormAttributeMappingTypeBadge == attributeMapping.type) {
+    FKBadgeField *textFieldCell =
+        (FKBadgeField *)[self cellForRowAtIndexPath:indexPath];
+    [textFieldCell.textField setUserInteractionEnabled:YES];
+    [textFieldCell.textField becomeFirstResponder];
+    return;
   }
 
   [self.tableView deselectRowAtIndexPath:indexPath animated:YES];

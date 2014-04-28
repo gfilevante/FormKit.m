@@ -17,7 +17,6 @@
 
 #import "FKValueViewField.h"
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -25,54 +24,55 @@
 
 @synthesize valueView = _valueView;
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    if (self.textLabel.hidden) {
-        
-        if (nil != self.errorLabel.text) {
-            CGRect rect = CGRectInset(self.bounds, self.xMargin, 0);
-            rect.size.height -= self.errorLabel.frame.size.height;
-            self.valueView.frame = rect;
-        } else {
-            self.valueView.frame = CGRectInset(self.bounds, self.xMargin, 0);
-        }
-    } else {
-        self.valueView.frame = CGRectMake(self.textLabel.frame.origin.x + self.textLabel.frame.size.width + 20, self.textLabel.frame.origin.y,
-                                          self.contentView.frame.size.width - self.textLabel.frame.size.width - 40, self.textLabel.frame.size.height);
-    }
-}
+  [super layoutSubviews];
 
+  if (self.textLabel.hidden) {
+
+    //    if (nil != self.errorLabel.text) {
+    //      CGRect rect = CGRectInset(self.bounds, self.xMargin, 0);
+    //      rect.size.height -= self.errorLabel.frame.size.height;
+    //      rect.size.width -= 20;
+    //      self.valueView.frame = rect;
+    //    } else {
+    CGRect rect = self.bounds;
+    rect.size.width -= 50;
+          rect.origin.x = 15;
+    rect.origin.y = 0;
+    self.valueView.frame = rect;
+    //    }
+  } else {
+    self.valueView.frame = CGRectMake(
+        self.textLabel.frame.origin.x + self.textLabel.frame.size.width + 20,
+        self.textLabel.frame.origin.y, self.contentView.frame.size.width -
+                                           self.textLabel.frame.size.width - 40,
+        self.textLabel.frame.size.height);
+  }
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setValueView:(UIView *)valueView {
-    if (_valueView != valueView) {
-        [_valueView removeFromSuperview];
-        _valueView = valueView;
-        [self.contentView addSubview:_valueView];
-    }
+  if (_valueView != valueView) {
+    [_valueView removeFromSuperview];
+    _valueView = valueView;
+    [self.contentView addSubview:_valueView];
+  }
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 + (UITableViewCellStyle)cellStyle {
-    return UITableViewCellStyleValue1;
+  return UITableViewCellStyleValue1;
 }
-
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 #pragma mark FKFieldLabelHiddenableProtocol
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)hideLabel {
-    self.textLabel.hidden = YES;
+  self.textLabel.hidden = YES;
 }
-
 
 @end

@@ -29,379 +29,381 @@
 
 - (void)addFieldToOrdersArray:(NSString *)identifier;
 
-- (void)addAttributeMappingToFormMapping:(FKFormAttributeMapping *)attributeMapping;
+- (void)addAttributeMappingToFormMapping:
+        (FKFormAttributeMapping *)attributeMapping;
 
-- (FKFormAttributeMapping *)attributeMappingWithTitle:(NSString *)title
-                                            attribute:(NSString *)attribute
-                                                 type:(FKFormAttributeMappingType)type;
-
+- (FKFormAttributeMapping *)
+    attributeMappingWithTitle:(NSString *)title
+                    attribute:(NSString *)attribute
+                         type:(FKFormAttributeMappingType)type;
 
 @end
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 @implementation FKFormMapping
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)init {
-    self = [super init];
-    if (self) {
-        _attributeMappings = [[NSMutableDictionary alloc] init];
-        _sectionTitles = [[NSMutableDictionary alloc] init];
-        _fieldsOrder = [[NSMutableArray alloc] init];
-        _attributeValidations = [[NSMutableDictionary alloc] init];
-        _textFieldClass = [FKTextField class];
-        _floatFieldClass = [FKFloatField class];
-        _integerFieldClass = [FKIntegerField class];
-        _labelFieldClass = [FKLabelField class];
-        _passwordFieldClass = [FKPasswordTextField class];
-        _switchFieldClass = [FKSwitchField class];
-        _saveButtonFieldClass = [FKSaveButtonField class];
-        _disclosureIndicatorAccessoryField = [FKDisclosureIndicatorAccessoryField class];
-        _sliderFieldClass = [FKSliderField class];
-        _buttonFieldClass = [FKButtonField class];
-        _separatorFieldClass = [FKSeparatorField class];
-        _separatorMargin = 0;
-    }
-    return self;
+  self = [super init];
+  if (self) {
+    _attributeMappings = [[NSMutableDictionary alloc] init];
+    _sectionTitles = [[NSMutableDictionary alloc] init];
+    _fieldsOrder = [[NSMutableArray alloc] init];
+    _attributeValidations = [[NSMutableDictionary alloc] init];
+    _textFieldClass = [FKTextField class];
+    _floatFieldClass = [FKFloatField class];
+    _integerFieldClass = [FKIntegerField class];
+    _labelFieldClass = [FKLabelField class];
+    _passwordFieldClass = [FKPasswordTextField class];
+    _switchFieldClass = [FKSwitchField class];
+    _saveButtonFieldClass = [FKSaveButtonField class];
+    _disclosureIndicatorAccessoryField =
+        [FKDisclosureIndicatorAccessoryField class];
+    _sliderFieldClass = [FKSliderField class];
+    _buttonFieldClass = [FKButtonField class];
+    _separatorFieldClass = [FKSeparatorField class];
+    _badgeFieldClass = [FKBadgeField class];
+    _selectFieldClass = [FKSelectField class];
+    _separatorMargin = 0;
+  }
+  return self;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)initWithObjectClass:(Class)objectClass {
-    self = [self init];
-    if (self) {
-        self.objectClass = objectClass;
-    }
-    return self;
+  self = [self init];
+  if (self) {
+    self.objectClass = objectClass;
+  }
+  return self;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-+ (id)mappingForClass:(Class)objectClass block:(void(^)(FKFormMapping *mapping))block {
-    FKFormMapping *formMapping = [[self alloc] initWithObjectClass:objectClass];
-    block(formMapping);
-    return formMapping;
++ (id)mappingForClass:(Class)objectClass
+                block:(void (^)(FKFormMapping *mapping))block {
+  FKFormMapping *formMapping = [[self alloc] initWithObjectClass:objectClass];
+  block(formMapping);
+  return formMapping;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-- (FKFormAttributeMapping *)mapAttribute:(NSString *)attribute title:(NSString *)title {
-    return [self mapAttribute:attribute title:title type:FKFormAttributeMappingTypeDefault];
+- (FKFormAttributeMapping *)mapAttribute:(NSString *)attribute
+                                   title:(NSString *)title {
+  return [self mapAttribute:attribute
+                      title:title
+                       type:FKFormAttributeMappingTypeDefault];
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (FKFormAttributeMapping *)mapAttribute:(NSString *)attribute
                                    title:(NSString *)title
                                     type:(FKFormAttributeMappingType)type {
-    
-    return [self mapAttribute:attribute title:title type:type controllerClass:nil];
-}
 
+  return
+      [self mapAttribute:attribute title:title type:type controllerClass:nil];
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (FKFormAttributeMapping *)mapAttribute:(NSString *)attribute
                                    title:(NSString *)title
                                     type:(FKFormAttributeMappingType)type
                             keyboardType:(UIKeyboardType)keyboardType {
-    
-    FKFormAttributeMapping *attributeMapping = [self attributeMappingWithTitle:title
-                                                                     attribute:attribute
-                                                                          type:type];
-    
-    attributeMapping.keyboardType = keyboardType;
-    
-    return attributeMapping;
-}
 
+  FKFormAttributeMapping *attributeMapping =
+      [self attributeMappingWithTitle:title attribute:attribute type:type];
+
+  attributeMapping.keyboardType = keyboardType;
+
+  return attributeMapping;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (FKFormAttributeMapping *)mapAttribute:(NSString *)attribute
                                    title:(NSString *)title
                          placeholderText:(NSString *)placeholderText
                                     type:(FKFormAttributeMappingType)type {
-    
-    FKFormAttributeMapping *attributeMapping = [self attributeMappingWithTitle:title
-                                                                     attribute:attribute
-                                                                          type:type];
-    
-    attributeMapping.placeholderText = placeholderText;
-    
-    return attributeMapping;
-}
 
+  FKFormAttributeMapping *attributeMapping =
+      [self attributeMappingWithTitle:title attribute:attribute type:type];
+
+  attributeMapping.placeholderText = placeholderText;
+
+  return attributeMapping;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (FKFormAttributeMapping *)mapAttribute:(NSString *)attribute
                                    title:(NSString *)title
                                     type:(FKFormAttributeMappingType)type
                          controllerClass:(Class)controllerClass {
-    
-    FKFormAttributeMapping *attributeMapping = [self attributeMappingWithTitle:title
-                                                                     attribute:attribute
-                                                                          type:type];
-    
-    attributeMapping.controllerClass = controllerClass;
-    
-    return attributeMapping;
-}
 
+  FKFormAttributeMapping *attributeMapping =
+      [self attributeMappingWithTitle:title attribute:attribute type:type];
+
+  attributeMapping.controllerClass = controllerClass;
+
+  return attributeMapping;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-- (FKFormAttributeMapping *)mapSliderAttribute:(NSString *)attribute
-                                         title:(NSString *)title
-                                      minValue:(float)minValue
-                                      maxValue:(float)maxValue
-                                    valueBlock:(FKFormMappingSliderValueBlock)valueBlock {
-    
-    FKFormAttributeMapping *attributeMapping = [self attributeMappingWithTitle:title
-                                                                     attribute:attribute
-                                                                          type:FKFormAttributeMappingTypeSlider];
-    
-    attributeMapping.minValue = minValue;
-    attributeMapping.maxValue = maxValue;
-    attributeMapping.sliderValueBlock = valueBlock;
-    
-    return attributeMapping;
-}
+- (FKFormAttributeMapping *)
+    mapSliderAttribute:(NSString *)attribute
+                 title:(NSString *)title
+              minValue:(float)minValue
+              maxValue:(float)maxValue
+            valueBlock:(FKFormMappingSliderValueBlock)valueBlock {
 
+  FKFormAttributeMapping *attributeMapping =
+      [self attributeMappingWithTitle:title
+                            attribute:attribute
+                                 type:FKFormAttributeMappingTypeSlider];
+
+  attributeMapping.minValue = minValue;
+  attributeMapping.maxValue = maxValue;
+  attributeMapping.sliderValueBlock = valueBlock;
+
+  return attributeMapping;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (FKFormAttributeMapping *)mapAttribute:(NSString *)attribute
                                    title:(NSString *)title
                                     type:(FKFormAttributeMappingType)type
-                         dateFormatBlock:(FKFormMappingDateFormatBlock)dateFormatBlock {
-    
-    FKFormAttributeMapping *attributeMapping = [self attributeMappingWithTitle:title
-                                                                     attribute:attribute
-                                                                          type:type];
-    
-    attributeMapping.dateFormatBlock = dateFormatBlock;
-    
-    return attributeMapping;
-}
+                         dateFormatBlock:
+                             (FKFormMappingDateFormatBlock)dateFormatBlock {
 
+  FKFormAttributeMapping *attributeMapping =
+      [self attributeMappingWithTitle:title attribute:attribute type:type];
+
+  attributeMapping.dateFormatBlock = dateFormatBlock;
+
+  return attributeMapping;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (FKFormAttributeMapping *)mapAttribute:(NSString *)attribute
                                    title:(NSString *)title
                                     type:(FKFormAttributeMappingType)type
                               dateFormat:(NSString *)dateFormat {
-    
-    FKFormAttributeMapping *attributeMapping = [self attributeMappingWithTitle:title
-                                                                     attribute:attribute
-                                                                          type:type];
-    
-    attributeMapping.dateFormat = dateFormat;
-    
-    return attributeMapping;
-}
 
+  FKFormAttributeMapping *attributeMapping =
+      [self attributeMappingWithTitle:title attribute:attribute type:type];
+
+  attributeMapping.dateFormat = dateFormat;
+
+  return attributeMapping;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-- (FKFormAttributeMapping *)mapAttribute:(NSString *)attribute
-                                   title:(NSString *)title
-                            showInPicker:(BOOL)showInPicker
-                       selectValuesBlock:(FKFormMappingSelectValueBlock)selectValueBlock
-                    valueFromSelectBlock:(FKFormMappingValueFromSelectBlock)valueFromSelectBlock
-                         labelValueBlock:(FKFormMappingSelectLabelValueBlock)labelValue {
-    
-    FKFormAttributeMapping *attributeMapping = [self attributeMappingWithTitle:title
-                                                                     attribute:attribute
-                                                                          type:FKFormAttributeMappingTypeSelect];
-    
-    attributeMapping.selectValuesBlock = selectValueBlock;
-    attributeMapping.valueFromSelectBlock = valueFromSelectBlock;
-    attributeMapping.labelValueBlock = labelValue;
-    attributeMapping.showInPicker = showInPicker;
-    
-    return attributeMapping;
-}
+- (FKFormAttributeMapping *)
+            mapAttribute:(NSString *)attribute
+                   title:(NSString *)title
+            showInPicker:(BOOL)showInPicker
+       selectValuesBlock:(FKFormMappingSelectValueBlock)selectValueBlock
+    valueFromSelectBlock:(FKFormMappingValueFromSelectBlock)valueFromSelectBlock
+         labelValueBlock:(FKFormMappingSelectLabelValueBlock)labelValue {
 
+  FKFormAttributeMapping *attributeMapping =
+      [self attributeMappingWithTitle:title
+                            attribute:attribute
+                                 type:FKFormAttributeMappingTypeSelect];
+
+  attributeMapping.selectValuesBlock = selectValueBlock;
+  attributeMapping.valueFromSelectBlock = valueFromSelectBlock;
+  attributeMapping.labelValueBlock = labelValue;
+  attributeMapping.showInPicker = showInPicker;
+
+  return attributeMapping;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-- (FKFormAttributeMapping *)mapCustomCell:(Class)cell
-                               identifier:(NSString *)identifier
-                     willDisplayCellBlock:(FKFormMappingWillDisplayCellBlock)willDisplayCellBlock
-                           didSelectBlock:(FKFormMappingCellSelectionBlock)selectionBlock {
-    
-    return [self mapCustomCell:cell
-                    identifier:identifier
-                     rowHeight:0
-          willDisplayCellBlock:willDisplayCellBlock
-                didSelectBlock:selectionBlock];
-}
+- (FKFormAttributeMapping *)
+           mapCustomCell:(Class)cell
+              identifier:(NSString *)identifier
+    willDisplayCellBlock:(FKFormMappingWillDisplayCellBlock)willDisplayCellBlock
+          didSelectBlock:(FKFormMappingCellSelectionBlock)selectionBlock {
 
+  return [self mapCustomCell:cell
+                  identifier:identifier
+                   rowHeight:0
+        willDisplayCellBlock:willDisplayCellBlock
+              didSelectBlock:selectionBlock];
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-- (FKFormAttributeMapping *)mapCustomCell:(Class)cell
-                               identifier:(NSString *)identifier
-                                rowHeight:(CGFloat)rowHeight
-                     willDisplayCellBlock:(FKFormMappingWillDisplayCellBlock)willDisplayCellBlock
-                           didSelectBlock:(FKFormMappingCellSelectionBlock)selectionBlock {
-    
-    FKFormAttributeMapping *attributeMapping = [self attributeMappingWithTitle:nil
-                                                                     attribute:identifier
-                                                                          type:FKFormAttributeMappingTypeCustomCell];
-    
-    attributeMapping.willDisplayCellBlock = willDisplayCellBlock;;
-    attributeMapping.cellSelectionBlock = selectionBlock;
-    attributeMapping.customCell = cell;
-    attributeMapping.rowHeight = rowHeight;
-    
-    return attributeMapping;
-}
+- (FKFormAttributeMapping *)
+           mapCustomCell:(Class)cell
+              identifier:(NSString *)identifier
+               rowHeight:(CGFloat)rowHeight
+    willDisplayCellBlock:(FKFormMappingWillDisplayCellBlock)willDisplayCellBlock
+          didSelectBlock:(FKFormMappingCellSelectionBlock)selectionBlock {
 
+  FKFormAttributeMapping *attributeMapping =
+      [self attributeMappingWithTitle:nil
+                            attribute:identifier
+                                 type:FKFormAttributeMappingTypeCustomCell];
+
+  attributeMapping.willDisplayCellBlock = willDisplayCellBlock;
+  ;
+  attributeMapping.cellSelectionBlock = selectionBlock;
+  attributeMapping.customCell = cell;
+  attributeMapping.rowHeight = rowHeight;
+
+  return attributeMapping;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (FKFormAttributeMapping *)button:(NSString *)title
                         identifier:(NSString *)identifier
                            handler:(FKFormMappingButtonHandlerBlock)blockHandler
-                      accesoryType:(UITableViewCellAccessoryType)accesoryType; {
-    
-    FKFormAttributeMapping *attributeMapping = [self attributeMappingWithTitle:title
-                                                                     attribute:identifier
-                                                                          type:FKFormAttributeMappingTypeButton];
-    
-    attributeMapping.btnHandler = blockHandler;
-    attributeMapping.accesoryType = accesoryType;
-    self.saveAttribute = attributeMapping;
-    
-    return attributeMapping;
-}
+                      accesoryType:(UITableViewCellAccessoryType)accesoryType;
+{
 
+  FKFormAttributeMapping *attributeMapping =
+      [self attributeMappingWithTitle:title
+                            attribute:identifier
+                                 type:FKFormAttributeMappingTypeButton];
+
+  attributeMapping.btnHandler = blockHandler;
+  attributeMapping.accesoryType = accesoryType;
+  self.saveAttribute = attributeMapping;
+
+  return attributeMapping;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-- (FKFormAttributeMapping *)buttonSave:(NSString *)title handler:(FKBasicBlock)blockHandler {
-    [self sectionWithTitle:@"" identifier:@"saveSection"];
-    
-    FKFormAttributeMapping *attributeMapping = [self attributeMappingWithTitle:title
-                                                                     attribute:@"save"
-                                                                          type:FKFormAttributeMappingTypeSaveButton];
-    
-    attributeMapping.saveBtnHandler = blockHandler;    
-    self.saveAttribute = attributeMapping;
-    
-    return attributeMapping;
-}
+- (FKFormAttributeMapping *)buttonSave:(NSString *)title
+                               handler:(FKBasicBlock)blockHandler {
+  [self sectionWithTitle:@"" identifier:@"saveSection"];
 
+  FKFormAttributeMapping *attributeMapping =
+      [self attributeMappingWithTitle:title
+                            attribute:@"save"
+                                 type:FKFormAttributeMappingTypeSaveButton];
+
+  attributeMapping.saveBtnHandler = blockHandler;
+  self.saveAttribute = attributeMapping;
+
+  return attributeMapping;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)sectionWithTitle:(NSString *)title identifier:(NSString *)identifier {
-    [self sectionWithTitle:title footer:nil identifier:identifier];
+  [self sectionWithTitle:title footer:nil identifier:identifier];
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)sectionWithTitle:(NSString *)title footer:(NSString *)footer identifier:(NSString *)identifier {
-    FKSectionObject *section = [FKSectionObject sectionWithHeaderTitle:(title ? title : @"")
-                                                           footerTitle:footer];
-    
-    NSString *convertedIdentifier = [NSString stringWithFormat:@"section-%@", identifier];
-    
-    [_sectionTitles setObject:section forKey:convertedIdentifier];
-    [self addFieldToOrdersArray:convertedIdentifier];
-}
+- (void)sectionWithTitle:(NSString *)title
+                  footer:(NSString *)footer
+              identifier:(NSString *)identifier {
+  FKSectionObject *section =
+      [FKSectionObject sectionWithHeaderTitle:(title ? title : @"")
+                                  footerTitle:footer];
 
+  NSString *convertedIdentifier =
+      [NSString stringWithFormat:@"section-%@", identifier];
+
+  [_sectionTitles setObject:section forKey:convertedIdentifier];
+  [self addFieldToOrdersArray:convertedIdentifier];
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)mappingForAttribute:(NSString *)attribute
-           attributeMapping:(FKFormMappingAttributeMappingBlock)attributeMappingBlock {
-    
-    [self mappingForAttribute:attribute
-                        title:nil
-                         type:FKFormAttributeMappingTypeDefault attributeMapping:attributeMappingBlock];
-}
+           attributeMapping:
+               (FKFormMappingAttributeMappingBlock)attributeMappingBlock {
 
+  [self mappingForAttribute:attribute
+                      title:nil
+                       type:FKFormAttributeMappingTypeDefault
+           attributeMapping:attributeMappingBlock];
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)mappingForAttribute:(NSString *)attribute
                       title:(NSString *)title
                        type:(FKFormAttributeMappingType)type
-           attributeMapping:(FKFormMappingAttributeMappingBlock)attributeMappingBlock {
-    
-    FKFormAttributeMapping *attributeMapping = [self attributeMappingWithTitle:title attribute:attribute type:type];
-    attributeMappingBlock(attributeMapping);
-}
+           attributeMapping:
+               (FKFormMappingAttributeMappingBlock)attributeMappingBlock {
 
+  FKFormAttributeMapping *attributeMapping =
+      [self attributeMappingWithTitle:title attribute:attribute type:type];
+  attributeMappingBlock(attributeMapping);
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)validationForAttribute:(NSString *)attribute
                     validBlock:(FKFormMappingIsValueValidBlock)validBlock {
-    
-    [self validationForAttribute:attribute validBlock:validBlock errorMessageBlock:nil];
-}
 
+  [self validationForAttribute:attribute
+                    validBlock:validBlock
+             errorMessageBlock:nil];
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)validationForAttribute:(NSString *)attribute
                     validBlock:(FKFormMappingIsValueValidBlock)validBlock
-             errorMessageBlock:(FKFormMappingFieldErrorStringBlock)errorMessageBlock {
-    
-    FKFormAttributeValidation *attributeValidation = [FKFormAttributeValidation attributeValidation];
-    attributeValidation.attribute = attribute;
-    attributeValidation.valueValidBlock = validBlock;
-    attributeValidation.errorMessageBlock = errorMessageBlock;
-    [_attributeValidations setObject:attributeValidation forKey:attribute];
-}
+             errorMessageBlock:
+                 (FKFormMappingFieldErrorStringBlock)errorMessageBlock {
 
+  FKFormAttributeValidation *attributeValidation =
+      [FKFormAttributeValidation attributeValidation];
+  attributeValidation.attribute = attribute;
+  attributeValidation.valueValidBlock = validBlock;
+  attributeValidation.errorMessageBlock = errorMessageBlock;
+  [_attributeValidations setObject:attributeValidation forKey:attribute];
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 #pragma mark Getters and setters
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (NSDictionary *)attributeMappings {
-    return _attributeMappings;
+  return _attributeMappings;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (NSDictionary *)sectionTitles {
-    return _sectionTitles;
+  return _sectionTitles;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 #pragma mark Private
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-- (FKFormAttributeMapping *)attributeMappingWithTitle:(NSString *)title
-                                            attribute:(NSString *)attribute
-                                                 type:(FKFormAttributeMappingType)type {
-    
-    FKFormAttributeMapping *attributeMapping = [FKFormAttributeMapping attributeMapping];
-    attributeMapping.title = title;
-    attributeMapping.attribute = attribute;
-    attributeMapping.type = type;
-    [self addAttributeMappingToFormMapping:attributeMapping];
-    
-    return attributeMapping;
-}
+- (FKFormAttributeMapping *)
+    attributeMappingWithTitle:(NSString *)title
+                    attribute:(NSString *)attribute
+                         type:(FKFormAttributeMappingType)type {
 
+  FKFormAttributeMapping *attributeMapping =
+      [FKFormAttributeMapping attributeMapping];
+  attributeMapping.title = title;
+  attributeMapping.attribute = attribute;
+  attributeMapping.type = type;
+  [self addAttributeMappingToFormMapping:attributeMapping];
+
+  return attributeMapping;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)addFieldToOrdersArray:(NSString *)identifier {
-    if ([self.fieldsOrder isKindOfClass:[NSMutableArray class]]) {
-        [(NSMutableArray *)self.fieldsOrder addObject:identifier];
-    }
+  if ([self.fieldsOrder isKindOfClass:[NSMutableArray class]]) {
+    [(NSMutableArray *)self.fieldsOrder addObject:identifier];
+  }
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)addAttributeMappingToFormMapping:(FKFormAttributeMapping *)attributeMapping {
-    [_attributeMappings setObject:attributeMapping forKey:attributeMapping.attribute];
-    [self addFieldToOrdersArray:attributeMapping.attribute];
+- (void)addAttributeMappingToFormMapping:
+            (FKFormAttributeMapping *)attributeMapping {
+  [_attributeMappings setObject:attributeMapping
+                         forKey:attributeMapping.attribute];
+  [self addFieldToOrdersArray:attributeMapping.attribute];
 }
-
 
 @end

@@ -32,3 +32,4 @@
 #import "FKSaveButtonField.h"
 #import "FKDisclosureIndicatorAccessoryField.h"
 #import "FKSeparatorField.h"
+#import "FKSelectField.h"

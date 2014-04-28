@@ -40,7 +40,9 @@
     _customTextFieldClass = customTextFieldClass;
 
     _textField = [[self.customTextFieldClass alloc] init];
-
+    _textField.rightView =
+        [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 30)];
+    _textField.rightViewMode = UITextFieldViewModeAlways;
     self.textField.textAlignment = NSTextAlignmentRight;
 
     [self.textField addTarget:self
@@ -76,6 +78,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setValueTextColor:(UIColor *)color {
   self.textField.textColor = color;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)setErrorBorderColor:(UIColor *)color {
+  self.textField.layer.borderColor = [UIColor redColor].CGColor;
+  self.textField.layer.borderWidth = 1.0;
 }
 
 @end

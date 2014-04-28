@@ -46,6 +46,7 @@
     CGRect frame = self.detailTextLabel.frame;
     frame.origin.x = (frame.origin.x + frame.size.width) - self.labelWidth;
     frame.size.width = self.labelWidth;
+    frame.size.height = 25;
     self.detailTextLabel.frame = frame;
   }
 }

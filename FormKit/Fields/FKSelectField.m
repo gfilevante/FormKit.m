@@ -15,18 +15,11 @@
 // limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
+#import "FKSelectField.h"
 
-#import "FKFieldErrorProtocol.h"
-#import "FKFieldStyleProtocol.h"
-
-@interface FKSimpleField
-    : UITableViewCell <FKFieldErrorProtocol, FKFieldStyleProtocol>
-
-@property(nonatomic, strong) UILabel *errorLabel;
-@property(nonatomic, assign) CGFloat xMargin;
-@property(nonatomic, strong) UIButton *helpButton;
-@property(nonatomic, strong) UIView *helpView;
-@property(nonatomic, strong) UILabel *helpTextLabel;
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+@implementation FKSelectField
 
 @end

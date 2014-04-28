@@ -16,8 +16,11 @@
 
 - (void)setErrorTextColor:(UIColor *)color;
 
+- (void)setErrorBorderColor:(UIColor *)color;
+
 - (void)setErrorBackgroundColor:(UIColor *)color;
 
-+ (CGFloat)errorHeightWithError:(NSString *)error tableView:(UITableView *)tableView;
++ (CGFloat)errorHeightWithError:(NSString *)error
+                      tableView:(UITableView *)tableView;
 
 @end

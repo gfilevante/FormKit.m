@@ -60,7 +60,12 @@
 /**
  Cell background color in table cells for attribues with values.
  */
-@property(nonatomic, strong) UIColor *validationRequiredCellBackgroundColor;
+@property(nonatomic, strong) UIColor *validationRequiredFieldBackgroundColor;
+
+/**
+ Field border color in table cells for attribues with values.
+ */
+@property(nonatomic, strong) UIColor *validationRequiredFieldBorderColor;
 
 /**
  Cell background color in table cells for attribues with values.
@@ -71,6 +76,11 @@
  Cell background color in table cells for attribues with invalid values.
  */
 @property(nonatomic, strong) UIColor *validationErrorCellBackgroundColor;
+
+/**
+ Cell background color in table cells for attribues with invalid values.
+ */
+@property(nonatomic, strong) UIColor *validationErrorBorderColor;
 
 + (id)formTableModelForTableView:(UITableView *)tableView;
 

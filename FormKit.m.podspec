@@ -8,6 +8,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/brunow/FormKit.m.git", :tag => "0.4.0" }
   s.platform     = :ios, '6.0'
   s.source_files = 'FormKit/*.{h,m}', 'FormKit/Fields/*.{h,m}'
+  s.resources    = 'FormKit/FormKit.bundle'
   s.requires_arc = true
   s.dependency 'BWLongTextViewController', '~> 1.0'
   s.dependency 'ActionSheetPicker2', '~> 0.1'
