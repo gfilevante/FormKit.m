@@ -23,4 +23,5 @@
 @property(nonatomic, readonly) UITextField *textField;
 @property(nonatomic, readonly) UILabel *rightLabel;
 @property(nonatomic, assign) Class customTextFieldClass;
+@property(nonatomic, assign) CGFloat valueTextWidth;
 @end

@@ -28,5 +28,9 @@
 @property(nonatomic, strong) UIButton *helpButton;
 @property(nonatomic, strong) UIView *helpView;
 @property(nonatomic, strong) UILabel *helpTextLabel;
+@property(nonatomic, strong) UILabel *helpTitleLabel;
+@property(nonatomic, strong) UIButton *closeButton;
+@property(nonatomic, strong) NSString *helpText;
+@property(nonatomic, strong) NSString *helpTitle;
 
 @end

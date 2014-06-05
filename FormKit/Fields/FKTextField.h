@@ -20,10 +20,11 @@
 #import "FKValueViewField.h"
 
 @interface FKTextField : FKValueViewField {
-    UITextField *_textField;
+  UITextField *_textField;
 }
 
-@property (nonatomic, readonly) UITextField *textField;
-@property (nonatomic, assign) Class customTextFieldClass;
+@property(nonatomic, readonly) UITextField *textField;
+@property(nonatomic, assign) Class customTextFieldClass;
+@property(nonatomic, assign) CGFloat valueTextWidth;
 
 @end

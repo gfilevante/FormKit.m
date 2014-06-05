@@ -31,6 +31,8 @@
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     self.customTextFieldClass = [UITextField class];
+    _valueTextWidth = 250;
+    ;
   }
   return self;
 }
@@ -68,11 +70,18 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
   CGRect rect = _textField.frame;
-  rect.size.width = self.valueView.frame.size.width - 40;
+  rect.size.width = _valueTextWidth;
   _textField.frame = rect;
   rect = _rightLabel.frame;
-  rect.origin.x = self.valueView.frame.size.width - 40;
+  rect.origin.x = _valueTextWidth;
   _rightLabel.frame = rect;
+  rect = self.valueView.frame;
+  rect.size.width = _valueTextWidth + _rightLabel.frame.size.width;
+  self.valueView.frame = rect;
+  rect = self.helpButton.frame;
+  rect.origin.x = self.valueView.frame.origin.x + _valueTextWidth +
+                  _rightLabel.frame.size.width + 10;
+  self.helpButton.frame = rect;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,6 +116,10 @@
 - (void)setErrorBorderColor:(UIColor *)color {
   self.textField.layer.borderColor = [UIColor redColor].CGColor;
   self.textField.layer.borderWidth = 1.0;
+}
+
+- (void)setValueTextWidth:(CGFloat)width {
+  _valueTextWidth = width;
 }
 
 @end

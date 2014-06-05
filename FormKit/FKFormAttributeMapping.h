@@ -72,6 +72,7 @@ typedef enum {
 @property(nonatomic, assign) BOOL hideLabel;
 @property(nonatomic, assign) NSTextAlignment textAlignment;
 @property(nonatomic, assign) NSTextAlignment valueTextAlignment;
+@property(nonatomic, assign) CGFloat valueTextWidth;
 @property(nonatomic, assign) BOOL clearsOnBeginEditing;
 @property(nonatomic, assign) UITextAutocorrectionType autocorrectionType;
 @property(nonatomic, assign) CGFloat separatorMargin;

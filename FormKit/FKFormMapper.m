@@ -148,6 +148,13 @@
     [labelWidthField setLabelWidth:attributeMapping.labelTextWidth];
   }
 
+  if (attributeMapping.valueTextWidth != CGFLOAT_MAX &&
+      [field respondsToSelector:@selector(setValueTextWidth:)]) {
+    UITableViewCell<FKFieldStyleProtocol> *valueWidthField =
+        (UITableViewCell<FKFieldStyleProtocol> *)field;
+    [valueWidthField setValueTextWidth:attributeMapping.valueTextWidth];
+  }
+
   field.textLabel.textAlignment = attributeMapping.textAlignment;
 
   if ([field respondsToSelector:@selector(setValueTextAlignment:)]) {
@@ -273,7 +280,8 @@
       if (nil != attributeValidation.errorMessageBlock) {
         id value = [self valueForAttributeMapping:attributeMapping];
         [errorField
-            addError:attributeValidation.errorMessageBlock(value, self.object)];
+             addError:attributeValidation.errorMessageBlock(value, self.object)
+            withTitle:attributeMapping.placeholderText];
 
         [errorField
             setErrorBorderColor:self.formModel.validationErrorBorderColor];

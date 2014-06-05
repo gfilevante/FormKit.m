@@ -12,7 +12,7 @@
 
 @required
 
-- (void)addError:(NSString *)error;
+- (void)addError:(NSString *)error withTitle:(NSString *)title;
 
 - (void)setErrorTextColor:(UIColor *)color;
 

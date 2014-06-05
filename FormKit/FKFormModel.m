@@ -121,7 +121,7 @@ NSString *const FKPickerDidHideNotification = @"com.formkit.picker.hide";
     self.validationErrorBorderColor = [UIColor redColor];
 
     self.labelTextColor = [UIColor blackColor];
-    self.valueTextColor = [UIColor lightGrayColor];
+    self.valueTextColor = [UIColor blackColor];
 
     self.formMappings = [NSMutableArray array];
   }
@@ -325,6 +325,7 @@ NSString *const FKPickerDidHideNotification = @"com.formkit.picker.hide";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (BOOL)isFormValid {
+  self.invalidAttributes = [NSSet set];
   [self validateForm];
   return [self.invalidAttributes count] == 0;
 }

@@ -14,6 +14,8 @@
 
 - (void)setLabelWidth:(CGFloat)width;
 
+- (void)setValueTextWidth:(CGFloat)width;
+
 - (void)hideLabel;
 
 - (void)setTextAlignment:(NSTextAlignment)textAlignment;

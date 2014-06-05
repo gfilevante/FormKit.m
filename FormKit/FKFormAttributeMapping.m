@@ -34,6 +34,7 @@
     self.autocorrectionType = UITextAutocorrectionTypeDefault;
     self.separatorMargin = CGFLOAT_MAX;
     self.labelTextWidth = CGFLOAT_MAX;
+    self.valueTextWidth = CGFLOAT_MAX;
     self.requiredField = NO;
   }
   return self;
