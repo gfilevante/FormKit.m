@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "FormKit.m"
-  s.version      = "0.4.0"
+  s.version      = "0.4.2"
   s.summary      = "FormKit.m is a library that helps building form with table view."
   s.homepage     = "https://github.com/brunow/FormKit.m"
   s.license      = 'Apache License 2.0'
@@ -11,5 +11,5 @@ Pod::Spec.new do |s|
   s.resources    = 'FormKit/FormKit.bundle'
   s.requires_arc = true
   s.dependency 'BWLongTextViewController', '~> 1.0'
-  s.dependency 'ActionSheetPicker2', '~> 0.1'
+  s.dependency 'ActionSheetPicker-3.0', '~> 1.1.10'
 end

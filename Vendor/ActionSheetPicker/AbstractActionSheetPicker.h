@@ -29,6 +29,7 @@
 
 
 @interface AbstractActionSheetPicker : NSObject
+@property (nonatomic, strong) UIToolbar* toolbar;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, strong) UIView *pickerView;
 @property (nonatomic, readonly) CGSize viewSize;
@@ -49,12 +50,18 @@
 - (void)notifyTarget:(id)target didCancelWithAction:(SEL)cancelAction origin:(id)origin;
 
     // For subclasses.  This returns a configured picker view.  Subclasses should autorelease.
-- (UIPickerView *)configuredPickerView;
+- (UIView *)configuredPickerView;
 
     // Adds custom buttons to the left of the UIToolbar that select specified values
 - (void)addCustomButtonWithTitle:(NSString *)title value:(id)value;
 
     //For subclasses. This responds to a custom button being pressed.
-- (void)customButtonPressed:(id)sender;
+- (IBAction)customButtonPressed:(id)sender;
+
+    // Allow the user to specify a custom cancel button
+- (void) setCancelButton: (UIBarButtonItem *)button;
+
+    // Allow the user to specify a custom done button
+- (void) setDoneButton: (UIBarButtonItem *)button;
 
 @end
